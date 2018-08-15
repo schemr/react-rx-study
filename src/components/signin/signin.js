@@ -19,9 +19,12 @@ class Signin extends Component {
 
     
     componentDidMount() {
+        console.log('RxJS included?', !!Rx);
         this.email$
             .subscribe(email => this.setState({email}));
-        console.log('RxJS included?', !!Rx);
+        this.password$
+            .subscribe(password => this.setState({password}));
+        
         const ryan = document.querySelector('#ryan');
         const face = document.querySelectorAll('.ears, .eyes, .muzzle');
         const email = document.querySelector('input[type="text"]');
@@ -110,10 +113,10 @@ class Signin extends Component {
         
         fauxInput.appendChild(span);
         
-        //email.addEventListener( 'focus', focus, false );
-        //email.addEventListener( 'keyup', look, false );
-        //email.addEventListener( 'click', look, false );
-        //email.addEventListener( 'blur', reset, false );
+        email.addEventListener( 'focus', focus, false );
+        email.addEventListener( 'keyup', look, false );
+        email.addEventListener( 'click', look, false );
+        email.addEventListener( 'blur', reset, false );
         
         password.addEventListener( 'focus', lookAway, false );
         password.addEventListener( 'blur', reset, false );
@@ -123,7 +126,7 @@ class Signin extends Component {
             'blur',
             'focus'
         ]
-        const emailStreams = emailEvent.map((event) => Rx.fromEvent(email, event).subscribe(event))
+        const emailStreams = emailEvent.map((event) => Rx.fromEvent(email, event))
         const emailEvent$ = Rx.merge(...emailStreams);
         
                             
